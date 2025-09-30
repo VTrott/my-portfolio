@@ -1,0 +1,67 @@
+<div class="about-container">
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="profile-section">
+        <div class="profile-image">
+          <img [src]="about?.profileImageUrl || 'assets/default-avatar.png'" 
+               [alt]="about?.name || 'Profile Image'"
+               class="avatar">
+        </div>
+        <div class="profile-info">
+          <h1 class="name">{{ about?.name || 'Your Name' }}</h1>
+          <h2 class="title">{{ about?.title || 'Software Developer' }}</h2>
+          <p class="location" *ngIf="about?.location">
+            <mat-icon>location_on</mat-icon>
+            {{ about.location }}
+          </p>
+        </div>
+      </div>
+      
+      <div class="bio-section">
+        <p class="bio">{{ about?.bio || 'Passionate software developer with 3 years of experience building web applications and solving complex problems.' }}</p>
+      </div>
+      
+      <div class="contact-links">
+        <a mat-raised-button color="primary" [href]="about?.email ? 'mailto:' + about.email : '#'" 
+           *ngIf="about?.email">
+          <mat-icon>email</mat-icon>
+          Contact Me
+        </a>
+        <a mat-stroked-button [href]="about?.resumeUrl" target="_blank" rel="noopener" 
+           *ngIf="about?.resumeUrl">
+          <mat-icon>download</mat-icon>
+          Download Resume
+        </a>
+      </div>
+      
+      <div class="social-links" *ngIf="about?.linkedinUrl || about?.githubUrl">
+        <a [href]="about?.linkedinUrl" target="_blank" rel="noopener" *ngIf="about?.linkedinUrl">
+          <mat-icon>work</mat-icon>
+        </a>
+        <a [href]="about?.githubUrl" target="_blank" rel="noopener" *ngIf="about?.githubUrl">
+          <mat-icon>code</mat-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="skills-section">
+    <h2>Skills & Technologies</h2>
+    <div class="skills-grid">
+      <mat-chip-listbox>
+        <mat-chip>Angular</mat-chip>
+        <mat-chip>TypeScript</mat-chip>
+        <mat-chip>JavaScript</mat-chip>
+        <mat-chip>Java</mat-chip>
+        <mat-chip>Spring Boot</mat-chip>
+        <mat-chip>HTML/CSS</mat-chip>
+        <mat-chip>SCSS</mat-chip>
+        <mat-chip>Git</mat-chip>
+        <mat-chip>REST APIs</mat-chip>
+        <mat-chip>SQL</mat-chip>
+        <mat-chip>MongoDB</mat-chip>
+        <mat-chip>Docker</mat-chip>
+      </mat-chip-listbox>
+    </div>
+  </div>
+</div>

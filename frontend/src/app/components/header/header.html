@@ -1,0 +1,26 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <div class="header-content">
+    <a routerLink="/about" class="logo">
+      <span class="logo-text">Portfolio</span>
+    </a>
+    
+    <nav class="nav-menu" [class.mobile-menu-open]="mobileMenuOpen">
+      <a mat-button routerLink="/about" routerLinkActive="active" (click)="closeMobileMenu()">
+        About
+      </a>
+      <a mat-button routerLink="/projects" routerLinkActive="active" (click)="closeMobileMenu()">
+        Projects
+      </a>
+      <a mat-button routerLink="/experience" routerLinkActive="active" (click)="closeMobileMenu()">
+        Experience
+      </a>
+      <a mat-button routerLink="/contact" routerLinkActive="active" (click)="closeMobileMenu()">
+        Contact
+      </a>
+    </nav>
+    
+    <button mat-icon-button class="mobile-menu-button" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+      <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
