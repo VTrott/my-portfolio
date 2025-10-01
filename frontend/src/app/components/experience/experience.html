@@ -1,1 +1,100 @@
-<p>experience works!</p>
+<div class="experience-container">
+  <div class="experience-header">
+    <div class="experience-header-content">
+      <h1 class="experience-title">Experience</h1>
+      <p class="experience-subtitle">My professional journey and achievements</p>
+    </div>
+  </div>
+
+  <div class="experience-content section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Work Experience</h2>
+        <p>Building amazing things with great teams</p>
+      </div>
+      
+      <div class="experience-timeline">
+        <div *ngIf="loading" class="loading-container">
+          <mat-spinner diameter="50"></mat-spinner>
+          <p>Loading experience...</p>
+        </div>
+        
+        <div *ngIf="error" class="error-container">
+          <mat-icon>error</mat-icon>
+          <p>{{ error }}</p>
+          <button mat-raised-button color="primary" (click)="loadExperiences()">
+            Try Again
+          </button>
+        </div>
+
+        <div *ngFor="let experience of experiences; let i = index" class="experience-item">
+          <div class="timeline-marker">
+            <div class="marker-dot"></div>
+            <div class="marker-line" *ngIf="i < experiences.length - 1"></div>
+          </div>
+          
+          <div class="experience-card modern-card">
+            <div class="experience-header">
+              <div class="company-info">
+                <h3 class="job-title">{{ experience.title }}</h3>
+                <h4 class="company-name">{{ experience.company }}</h4>
+                <div class="job-details">
+                  <span class="job-location" *ngIf="experience.location">
+                    <mat-icon>location_on</mat-icon>
+                    {{ experience.location }}
+                  </span>
+                  <span class="job-duration">
+                    <mat-icon>schedule</mat-icon>
+                    {{ formatDate(experience.startDate) }} - 
+                    {{ experience.endDate ? formatDate(experience.endDate) : 'Present' }}
+                  </span>
+                </div>
+              </div>
+              
+              <div class="job-type" *ngIf="experience.type">
+                <mat-chip>{{ experience.type }}</mat-chip>
+              </div>
+            </div>
+            
+            <div class="experience-description" *ngIf="experience.description">
+              <p>{{ experience.description }}</p>
+            </div>
+            
+            <div class="experience-skills" *ngIf="experience.skills">
+              <h5>Technologies Used:</h5>
+              <mat-chip-set>
+                <mat-chip *ngFor="let skill of getSkillsArray(experience.skills)">
+                  {{ skill }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+            
+            <div class="experience-achievements" *ngIf="experience.achievements">
+              <h5>Key Achievements:</h5>
+              <ul>
+                <li *ngFor="let achievement of experience.achievements.split('|')">
+                  {{ achievement.trim() }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="resume-section">
+        <div class="resume-card modern-card">
+          <div class="resume-content">
+            <div class="resume-info">
+              <h3>Download Resume</h3>
+              <p>Get a detailed overview of my experience and skills</p>
+            </div>
+            <button mat-raised-button color="primary" class="resume-button">
+              <mat-icon>download</mat-icon>
+              Download PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

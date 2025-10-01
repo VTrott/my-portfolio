@@ -16,4 +16,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     
     @Query("SELECT p FROM Project p WHERE p.title LIKE %:keyword% OR p.description LIKE %:keyword% OR p.technologies LIKE %:keyword%")
     List<Project> findByKeyword(String keyword);
+    
+    List<Project> findByTechnologiesContainingIgnoreCase(String skill);
 }

@@ -5,8 +5,10 @@ import com.portfolio.backend.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -56,5 +58,21 @@ public class ProjectService {
     
     public List<Project> searchProjects(String keyword) {
         return projectRepository.findByKeyword(keyword);
+    }
+    
+    public List<Project> filterProjectsBySkill(String skill) {
+        return projectRepository.findByTechnologiesContainingIgnoreCase(skill);
+    }
+    
+    public List<String> getAllSkills() {
+        List<Project> projects = projectRepository.findAll();
+        return projects.stream()
+                .map(Project::getTechnologies)
+                .filter(technologies -> technologies != null && !technologies.trim().isEmpty())
+                .flatMap(technologies -> Arrays.stream(technologies.split(",")))
+                .map(String::trim)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
     }
 }

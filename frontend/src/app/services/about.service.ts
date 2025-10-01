@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, retry, delay } from 'rxjs';
 import { About } from '../models/about.model';
 
 @Injectable({
@@ -12,7 +12,14 @@ export class AboutService {
   constructor(private http: HttpClient) { }
 
   getAbout(): Observable<About> {
-    return this.http.get<About>(this.apiUrl);
+    return this.http.get<About>(this.apiUrl).pipe(
+      retry(3),
+      delay(1000),
+      catchError(error => {
+        console.error('Error fetching about data:', error);
+        throw error;
+      })
+    );
   }
 
   createAbout(about: About): Observable<About> {

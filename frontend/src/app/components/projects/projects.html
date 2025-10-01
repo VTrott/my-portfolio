@@ -1,1 +1,200 @@
-<p>projects works!</p>
+<div class="projects-container">
+  <div class="projects-header">
+    <div class="projects-header-content">
+      <h1 class="projects-title">My Projects</h1>
+      <p class="projects-subtitle">A showcase of my recent work and side projects</p>
+    </div>
+  </div>
+
+  <div class="projects-content section">
+    <div class="container">
+      <mat-tab-group [(selectedIndex)]="selectedTab" class="projects-tabs">
+        <mat-tab label="Featured Projects">
+          <div class="tab-content">
+            <div class="filter-section">
+              <mat-form-field appearance="outline" class="skill-filter">
+                <mat-label>Filter by Technology</mat-label>
+                <mat-select [(ngModel)]="selectedSkill" (selectionChange)="onSkillFilterChange()">
+                  <mat-option value="">All Technologies</mat-option>
+                  <mat-option *ngFor="let skill of availableSkills" [value]="skill">
+                    {{ skill }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="projects-grid">
+              <div *ngIf="loading" class="loading-container">
+                <mat-spinner diameter="50"></mat-spinner>
+                <p>Loading featured projects...</p>
+              </div>
+              
+              <div *ngIf="error" class="error-container">
+                <mat-icon>error</mat-icon>
+                <p>{{ error }}</p>
+                <button mat-raised-button color="primary" (click)="loadProjects()">
+                  Try Again
+                </button>
+              </div>
+
+              <div *ngFor="let project of featuredProjects" class="project-card modern-card">
+                <div class="project-image">
+                  <img [src]="project.imageUrl || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop'" 
+                       [alt]="project.title"
+                       (error)="$event.target.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop'">
+                  <div class="project-overlay">
+                    <button mat-fab color="primary" (click)="openLink(project.liveUrl)">
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button mat-fab color="accent" (click)="openLink(project.githubUrl)">
+                      <mat-icon>code</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="project-content">
+                  <div class="project-header">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <div class="project-badges">
+                      <span class="featured-badge" *ngIf="project.isFeatured">Featured</span>
+                    </div>
+                  </div>
+                  
+                  <p class="project-description">{{ project.description }}</p>
+                  
+                  <div class="project-technologies">
+                    <mat-chip *ngFor="let tech of getTechnologiesArray(project.technologies)" 
+                              class="tech-chip">
+                      {{ tech }}
+                    </mat-chip>
+                  </div>
+                  
+                  <div class="project-footer">
+                    <button mat-stroked-button color="primary" (click)="openLink(project.githubUrl)">
+                      <mat-icon>code</mat-icon>
+                      Code
+                    </button>
+                    <button mat-raised-button color="primary" (click)="openLink(project.liveUrl)">
+                      <mat-icon>launch</mat-icon>
+                      Live Demo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="All Projects">
+          <div class="tab-content">
+            <div class="projects-grid">
+              <div *ngFor="let project of filteredProjects" class="project-card modern-card">
+                <div class="project-image">
+                  <img [src]="project.imageUrl || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop'" 
+                       [alt]="project.title"
+                       (error)="$event.target.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop'">
+                  <div class="project-overlay">
+                    <button mat-fab color="primary" (click)="openLink(project.liveUrl)">
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button mat-fab color="accent" (click)="openLink(project.githubUrl)">
+                      <mat-icon>code</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="project-content">
+                  <div class="project-header">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <div class="project-badges">
+                      <span class="featured-badge" *ngIf="project.isFeatured">Featured</span>
+                    </div>
+                  </div>
+                  
+                  <p class="project-description">{{ project.description }}</p>
+                  
+                  <div class="project-technologies">
+                    <mat-chip *ngFor="let tech of getTechnologiesArray(project.technologies)" 
+                              class="tech-chip">
+                      {{ tech }}
+                    </mat-chip>
+                  </div>
+                  
+                  <div class="project-footer">
+                    <button mat-stroked-button color="primary" (click)="openLink(project.githubUrl)">
+                      <mat-icon>code</mat-icon>
+                      Code
+                    </button>
+                    <button mat-raised-button color="primary" (click)="openLink(project.liveUrl)">
+                      <mat-icon>launch</mat-icon>
+                      Live Demo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="GitHub Repositories">
+          <div class="tab-content">
+            <div class="github-section">
+              <button mat-raised-button color="primary" (click)="loadGitHubRepos()" 
+                      *ngIf="!showGitHubRepos">
+                <mat-icon>cloud_download</mat-icon>
+                Load GitHub Repositories
+              </button>
+              
+              <div *ngIf="showGitHubRepos && githubRepos.length > 0" class="github-repos">
+                <div *ngFor="let repo of githubRepos" class="repo-card modern-card">
+                  <div class="repo-header">
+                    <h3 class="repo-name">
+                      <mat-icon>folder</mat-icon>
+                      {{ repo.name }}
+                    </h3>
+                    <div class="repo-stats">
+                      <span class="repo-stat">
+                        <mat-icon>star</mat-icon>
+                        {{ repo.stargazers_count }}
+                      </span>
+                      <span class="repo-stat">
+                        <mat-icon>call_split</mat-icon>
+                        {{ repo.forks_count }}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <p class="repo-description" *ngIf="repo.description">
+                    {{ repo.description }}
+                  </p>
+                  
+                  <div class="repo-details">
+                    <span class="repo-language" *ngIf="repo.language">
+                      <span class="language-dot" [style.background-color]="getLanguageColor(repo.language)"></span>
+                      {{ repo.language }}
+                    </span>
+                    <span class="repo-date">
+                      Updated {{ formatDate(repo.updated_at) }}
+                    </span>
+                  </div>
+                  
+                  <div class="repo-footer">
+                    <button mat-stroked-button (click)="openLink(repo.html_url)">
+                      <mat-icon>code</mat-icon>
+                      View on GitHub
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div *ngIf="showGitHubRepos && githubRepos.length === 0" class="no-repos">
+                <mat-icon>folder_open</mat-icon>
+                <p>No repositories found</p>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

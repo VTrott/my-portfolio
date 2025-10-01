@@ -1,1 +1,128 @@
-<p>contact works!</p>
+<div class="contact-container">
+  <div class="contact-header">
+    <div class="contact-header-content">
+      <h1 class="contact-title">Get In Touch</h1>
+      <p class="contact-subtitle">I'd love to hear from you. Send me a message!</p>
+    </div>
+  </div>
+
+  <div class="contact-content section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h2>Let's Connect</h2>
+          <p>I'm always interested in new opportunities and exciting projects. Whether you have a question, want to collaborate, or just want to say hi, feel free to reach out!</p>
+          
+          <div class="contact-methods">
+            <div class="contact-method">
+              <div class="method-icon">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div class="method-info">
+                <h3>Email</h3>
+                <p>victoria@example.com</p>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <div class="method-icon">
+                <mat-icon>phone</mat-icon>
+              </div>
+              <div class="method-info">
+                <h3>Phone</h3>
+                <p>+1 (555) 123-4567</p>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <div class="method-icon">
+                <mat-icon>location_on</mat-icon>
+              </div>
+              <div class="method-info">
+                <h3>Location</h3>
+                <p>Palm Coast, FL</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <h3>Follow Me</h3>
+            <div class="social-buttons">
+              <a href="#" class="social-button" target="_blank" rel="noopener">
+                <mat-icon>work</mat-icon>
+                LinkedIn
+              </a>
+              <a href="#" class="social-button" target="_blank" rel="noopener">
+                <mat-icon>code</mat-icon>
+                GitHub
+              </a>
+              <a href="#" class="social-button" target="_blank" rel="noopener">
+                <mat-icon>article</mat-icon>
+                Medium
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-form-container">
+          <mat-card class="contact-form-card modern-card">
+            <mat-card-header>
+              <mat-card-title>Send Message</mat-card-title>
+              <mat-card-subtitle>I'll get back to you as soon as possible</mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Name</mat-label>
+                  <input matInput formControlName="name" placeholder="Your full name">
+                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-error *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                    {{ getErrorMessage('name') }}
+                  </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" formControlName="email" placeholder="your.email@example.com">
+                  <mat-icon matSuffix>email</mat-icon>
+                  <mat-error *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                    {{ getErrorMessage('email') }}
+                  </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Subject</mat-label>
+                  <input matInput formControlName="subject" placeholder="What's this about?">
+                  <mat-icon matSuffix>subject</mat-icon>
+                  <mat-error *ngIf="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched">
+                    {{ getErrorMessage('subject') }}
+                  </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Message</mat-label>
+                  <textarea matInput formControlName="message" rows="5" placeholder="Tell me about your project or just say hello..."></textarea>
+                  <mat-icon matSuffix>message</mat-icon>
+                  <mat-error *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+                    {{ getErrorMessage('message') }}
+                  </mat-error>
+                </mat-form-field>
+                
+                <button mat-raised-button 
+                        color="primary" 
+                        type="submit" 
+                        class="submit-button modern-button full-width"
+                        [disabled]="isSubmitting">
+                  <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+                  <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
+                  {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+                </button>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -66,4 +66,16 @@ public class ProjectController {
         List<Project> projects = projectService.searchProjects(keyword);
         return ResponseEntity.ok(projects);
     }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Project>> filterProjectsBySkill(@RequestParam String skill) {
+        List<Project> projects = projectService.filterProjectsBySkill(skill);
+        return ResponseEntity.ok(projects);
+    }
+    
+    @GetMapping("/skills")
+    public ResponseEntity<List<String>> getAllSkills() {
+        List<String> skills = projectService.getAllSkills();
+        return ResponseEntity.ok(skills);
+    }
 }

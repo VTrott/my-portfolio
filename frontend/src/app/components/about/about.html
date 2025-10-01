@@ -1,9 +1,23 @@
 <div class="about-container">
-  <div class="hero-section">
-    <div class="hero-content">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading...</p>
+  </div>
+  
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <mat-icon>error</mat-icon>
+    <p>{{ error }}</p>
+  </div>
+  
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error && about">
+  <div class="profile-header">
+    <div class="profile-content">
       <div class="profile-section">
         <div class="profile-image">
-          <img [src]="about?.profileImageUrl || 'assets/default-avatar.png'" 
+          <img [src]="about?.profileImageUrl || 'assets/default-avatar.svg'" 
                [alt]="about?.name || 'Profile Image'"
                class="avatar">
         </div>
@@ -12,7 +26,7 @@
           <h2 class="title">{{ about?.title || 'Software Developer' }}</h2>
           <p class="location" *ngIf="about?.location">
             <mat-icon>location_on</mat-icon>
-            {{ about.location }}
+            {{ about?.location }}
           </p>
         </div>
       </div>
@@ -22,7 +36,7 @@
       </div>
       
       <div class="contact-links">
-        <a mat-raised-button color="primary" [href]="about?.email ? 'mailto:' + about.email : '#'" 
+        <a mat-raised-button color="primary" [href]="about?.email ? 'mailto:' + about?.email : '#'" 
            *ngIf="about?.email">
           <mat-icon>email</mat-icon>
           Contact Me
@@ -63,5 +77,6 @@
         <mat-chip>Docker</mat-chip>
       </mat-chip-listbox>
     </div>
+  </div>
   </div>
 </div>

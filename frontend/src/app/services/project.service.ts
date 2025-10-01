@@ -38,4 +38,12 @@ export class ProjectService {
   searchProjects(keyword: string): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.apiUrl}/search?keyword=${encodeURIComponent(keyword)}`);
   }
+
+  filterProjectsBySkill(skill: string): Observable<Project[]> {
+    return this.http.get<Project[]>(`${this.apiUrl}/filter?skill=${encodeURIComponent(skill)}`);
+  }
+
+  getAllSkills(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/skills`);
+  }
 }

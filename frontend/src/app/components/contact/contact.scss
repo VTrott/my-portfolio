@@ -1,0 +1,386 @@
+// Modern Blue Theme Color Palette
+$primary-blue: #2563eb;
+$primary-blue-light: #3b82f6;
+$primary-blue-dark: #1d4ed8;
+$accent-blue: #06b6d4;
+$accent-cyan: #0891b2;
+$accent-teal: #0d9488;
+
+// Neutral Colors for Modern Design
+$background-primary: #ffffff;
+$background-secondary: #f8fafc;
+$background-tertiary: #f1f5f9;
+$surface-elevated: #ffffff;
+$surface-overlay: rgba(255, 255, 255, 0.8);
+
+// Text Colors
+$text-primary: #0f172a;
+$text-secondary: #334155;
+$text-tertiary: #64748b;
+$text-muted: #94a3b8;
+
+// Border and Shadow Colors
+$border-light: #e2e8f0;
+$border-medium: #cbd5e1;
+$shadow-light: rgba(15, 23, 42, 0.04);
+$shadow-medium: rgba(15, 23, 42, 0.08);
+$shadow-heavy: rgba(15, 23, 42, 0.12);
+
+.contact-container {
+  min-height: 100vh;
+  padding-top: 80px;
+  background: $background-primary;
+  position: relative;
+  
+  // Subtle background pattern
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(37, 99, 235, 0.01) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.contact-header {
+  background: $background-primary;
+  color: $text-primary;
+  padding: 8rem 0 6rem 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  
+  // Modern accent line
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, $primary-blue 0%, $accent-blue 100%);
+    border-radius: 2px;
+  }
+}
+
+.contact-header-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  animation: fadeInUp 1s ease-out;
+}
+
+.contact-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.05em;
+  color: $text-primary;
+  background: linear-gradient(135deg, $primary-blue 0%, $accent-blue 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-subtitle {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0;
+  color: $text-secondary;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.contact-content {
+  padding: 80px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.contact-info {
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  > p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--mat-sys-on-surface-variant);
+    margin-bottom: 3rem;
+  }
+}
+
+.contact-methods {
+  margin-bottom: 3rem;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  
+  .method-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    color: white;
+    
+    mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+  
+  .method-info {
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      color: var(--mat-sys-on-surface);
+    }
+    
+    p {
+      font-size: 1rem;
+      margin: 0;
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+}
+
+.social-links {
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--mat-sys-on-surface);
+  }
+}
+
+.social-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  text-decoration: none;
+  border-radius: 12px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  
+  &:hover {
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-icon {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.contact-form-container {
+  .contact-form-card {
+    border-radius: 20px;
+    overflow: hidden;
+    
+    ::ng-deep .mat-mdc-card-header {
+      padding: 2rem 2rem 1rem 2rem;
+      
+      .mat-mdc-card-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+      }
+      
+      .mat-mdc-card-subtitle {
+        color: var(--mat-sys-on-surface-variant);
+        font-size: 1rem;
+      }
+    }
+    
+    ::ng-deep .mat-mdc-card-content {
+      padding: 0 2rem 2rem 2rem;
+    }
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    border-radius: 12px;
+  }
+  
+  .mat-mdc-form-field-outline {
+    border-radius: 12px;
+  }
+  
+  &.mat-form-field-appearance-outline {
+    .mat-mdc-form-field-outline-thick {
+      border-width: 2px;
+    }
+  }
+}
+
+.submit-button {
+  height: 56px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  margin-top: 1rem;
+  
+  mat-spinner {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .contact-info {
+    order: 2;
+  }
+  
+  .contact-form-container {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .contact-content {
+    padding: 60px 0;
+  }
+  
+  .contact-info {
+    h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  .contact-form-card {
+    ::ng-deep .mat-mdc-card-header {
+      padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+    
+    ::ng-deep .mat-mdc-card-content {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+  }
+  
+  .social-buttons {
+    flex-direction: column;
+    
+    .social-button {
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .contact-content {
+    padding: 40px 0;
+  }
+  
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  .contact-method {
+    .method-icon {
+      width: 50px;
+      height: 50px;
+      
+      mat-icon {
+        font-size: 1.2rem;
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+    }
+  }
+}

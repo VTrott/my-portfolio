@@ -31,6 +31,10 @@ export class ContactService {
     return this.http.post<ContactMessage>(this.apiUrl, message);
   }
 
+  sendMessage(message: any): Observable<any> {
+    return this.http.post(this.apiUrl, message);
+  }
+
   markAsRead(id: number): Observable<ContactMessage> {
     return this.http.put<ContactMessage>(`${this.apiUrl}/${id}/mark-read`, {});
   }
