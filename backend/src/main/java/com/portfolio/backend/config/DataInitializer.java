@@ -32,11 +32,11 @@ public class DataInitializer implements CommandLineRunner {
             about.setName("Victoria Trotter");
             about.setTitle("Full-Stack Software Engineer");
             about.setBio("Passionate software engineer with 3+ years of experience building modern web applications. I love creating innovative solutions and turning complex problems into simple, elegant designs. I specialize in Angular, Spring Boot, and cloud technologies.");
-            about.setEmail("victoria@example.com");
-            about.setPhone("+1 (555) 123-4567");
+            about.setEmail("victoriatrotter95@gmail.com");
+            about.setPhone("+1 (386) 316-3160");
             about.setLocation("Palm Coast, FL");
-            about.setLinkedinUrl("https://linkedin.com/in/victoria-trotter");
-            about.setGithubUrl("https://github.com/victoria-trotter");
+            about.setLinkedinUrl("https://www.linkedin.com/in/vtrotter95/");
+            about.setGithubUrl("https://github.com/VTrott");
             about.setResumeUrl("https://victoria-trotter-resume.pdf");
             about.setProfileImageUrl("https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face");
             aboutRepository.save(about);
@@ -49,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
             portfolioProject.setTitle("Portfolio Website");
             portfolioProject.setDescription("A modern, responsive portfolio website built with Angular and Spring Boot. Features include dynamic content management, contact forms, and GitHub integration.");
             portfolioProject.setTechnologies("Angular, TypeScript, Spring Boot, Java, HTML, CSS, SCSS, Angular Material");
-            portfolioProject.setGithubUrl("https://github.com/victoria-trotter/portfolio");
+            portfolioProject.setGithubUrl("https://github.com/VTrott/portfolio");
             portfolioProject.setLiveUrl("https://victoria-trotter-portfolio.com");
             portfolioProject.setImageUrl("https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop");
             portfolioProject.setCreatedDate(LocalDate.now().minusDays(30));
@@ -60,7 +60,7 @@ public class DataInitializer implements CommandLineRunner {
             ecommerceProject.setTitle("E-Commerce Platform");
             ecommerceProject.setDescription("Full-stack e-commerce application with user authentication, payment integration, and admin dashboard. Built with React, Node.js, and MongoDB.");
             ecommerceProject.setTechnologies("React, Node.js, MongoDB, Express, Stripe API, JWT, Material-UI");
-            ecommerceProject.setGithubUrl("https://github.com/victoria-trotter/ecommerce-platform");
+            ecommerceProject.setGithubUrl("https://github.com/VTrott/ecommerce-platform");
             ecommerceProject.setLiveUrl("https://ecommerce-demo.victoria-trotter.com");
             ecommerceProject.setImageUrl("https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop");
             ecommerceProject.setCreatedDate(LocalDate.now().minusDays(60));
@@ -71,7 +71,7 @@ public class DataInitializer implements CommandLineRunner {
             taskProject.setTitle("Task Management App");
             taskProject.setDescription("Collaborative task management tool with real-time updates, drag-and-drop functionality, and team collaboration features.");
             taskProject.setTechnologies("Vue.js, Firebase, JavaScript, CSS, Vuex, Socket.io");
-            taskProject.setGithubUrl("https://github.com/victoria-trotter/task-manager");
+            taskProject.setGithubUrl("https://github.com/VTrott/task-manager");
             taskProject.setLiveUrl("https://taskmanager.victoria-trotter.com");
             taskProject.setImageUrl("https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop");
             taskProject.setCreatedDate(LocalDate.now().minusDays(90));
@@ -82,7 +82,7 @@ public class DataInitializer implements CommandLineRunner {
             weatherProject.setTitle("Weather Dashboard");
             weatherProject.setDescription("Real-time weather dashboard with location-based forecasts, interactive maps, and weather alerts. Integrates with OpenWeather API.");
             weatherProject.setTechnologies("Angular, OpenWeather API, TypeScript, Material Design, Chart.js");
-            weatherProject.setGithubUrl("https://github.com/victoria-trotter/weather-dashboard");
+            weatherProject.setGithubUrl("https://github.com/VTrott/weather-dashboard");
             weatherProject.setLiveUrl("https://weather.victoria-trotter.com");
             weatherProject.setImageUrl("https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=300&fit=crop");
             weatherProject.setCreatedDate(LocalDate.now().minusDays(120));

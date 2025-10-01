@@ -8,12 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/github")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/github")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
 public class GitHubController {
 
     @Autowired
     private GitHubService gitHubService;
+
+    @GetMapping("/profile/{username}")
+    public Map<String, Object> getUserProfile(@PathVariable String username) {
+        return gitHubService.getUserProfile(username);
+    }
 
     @GetMapping("/repos/{username}")
     public List<Map<String, Object>> getUserRepositories(@PathVariable String username) {

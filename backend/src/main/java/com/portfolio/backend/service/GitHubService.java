@@ -93,8 +93,9 @@ public class GitHubService {
             
             HttpHeaders headers = new HttpHeaders();
             headers.set("Accept", "application/vnd.github.v3+json");
+            headers.set("User-Agent", "Portfolio-App");
             if (GITHUB_TOKEN != null && !GITHUB_TOKEN.isEmpty()) {
-                headers.set("Authorization", "token " + GITHUB_TOKEN);
+                headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
             }
             
             HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -102,7 +103,11 @@ public class GitHubService {
             ResponseEntity<Map> response = restTemplate.exchange(
                 url, HttpMethod.GET, entity, Map.class);
             
-            return response.getBody();
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                return processRepository(response.getBody());
+            }
+            
+            return null;
         } catch (Exception e) {
             System.err.println("Error fetching repository details: " + e.getMessage());
             return null;
@@ -115,8 +120,9 @@ public class GitHubService {
             
             HttpHeaders headers = new HttpHeaders();
             headers.set("Accept", "application/vnd.github.v3+json");
+            headers.set("User-Agent", "Portfolio-App");
             if (GITHUB_TOKEN != null && !GITHUB_TOKEN.isEmpty()) {
-                headers.set("Authorization", "token " + GITHUB_TOKEN);
+                headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
             }
             
             HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -124,23 +130,71 @@ public class GitHubService {
             ResponseEntity<Map> response = restTemplate.exchange(
                 url, HttpMethod.GET, entity, Map.class);
             
-            Map<String, Object> languages = response.getBody();
-            List<Map<String, Object>> result = new ArrayList<>();
-            
-            if (languages != null) {
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                Map<String, Object> languages = response.getBody();
+                List<Map<String, Object>> result = new ArrayList<>();
+                
                 for (Map.Entry<String, Object> entry : languages.entrySet()) {
-                    Map<String, Object> lang = Map.of(
-                        "name", entry.getKey(),
-                        "bytes", entry.getValue()
-                    );
+                    Map<String, Object> lang = new HashMap<>();
+                    lang.put("name", entry.getKey());
+                    lang.put("bytes", entry.getValue());
                     result.add(lang);
                 }
+                
+                return result;
             }
             
-            return result;
+            return new ArrayList<>();
         } catch (Exception e) {
             System.err.println("Error fetching repository languages: " + e.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    public Map<String, Object> getUserProfile(String username) {
+        try {
+            String url = GITHUB_API_BASE + "/users/" + username;
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Accept", "application/vnd.github.v3+json");
+            headers.set("User-Agent", "Portfolio-App");
+            if (GITHUB_TOKEN != null && !GITHUB_TOKEN.isEmpty()) {
+                headers.set("Authorization", "Bearer " + GITHUB_TOKEN);
+            }
+            
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            
+            ResponseEntity<Map> response = restTemplate.exchange(
+                url, HttpMethod.GET, entity, Map.class);
+            
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                Map<String, Object> profile = response.getBody();
+                Map<String, Object> processedProfile = new HashMap<>();
+                
+                processedProfile.put("id", profile.get("id"));
+                processedProfile.put("login", profile.get("login"));
+                processedProfile.put("name", profile.get("name"));
+                processedProfile.put("bio", profile.get("bio"));
+                processedProfile.put("avatarUrl", profile.get("avatar_url"));
+                processedProfile.put("htmlUrl", profile.get("html_url"));
+                processedProfile.put("publicRepos", profile.get("public_repos"));
+                processedProfile.put("followers", profile.get("followers"));
+                processedProfile.put("following", profile.get("following"));
+                processedProfile.put("createdAt", profile.get("created_at"));
+                processedProfile.put("updatedAt", profile.get("updated_at"));
+                processedProfile.put("location", profile.get("location"));
+                processedProfile.put("email", profile.get("email"));
+                processedProfile.put("blog", profile.get("blog"));
+                processedProfile.put("company", profile.get("company"));
+                processedProfile.put("twitterUsername", profile.get("twitter_username"));
+                
+                return processedProfile;
+            }
+            
+            return null;
+        } catch (Exception e) {
+            System.err.println("Error fetching user profile: " + e.getMessage());
+            return null;
         }
     }
 }

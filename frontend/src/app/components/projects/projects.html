@@ -155,11 +155,11 @@
                     <div class="repo-stats">
                       <span class="repo-stat">
                         <mat-icon>star</mat-icon>
-                        {{ repo.stargazers_count }}
+                        {{ repo.stargazersCount }}
                       </span>
                       <span class="repo-stat">
                         <mat-icon>call_split</mat-icon>
-                        {{ repo.forks_count }}
+                        {{ repo.forksCount }}
                       </span>
                     </div>
                   </div>
@@ -174,12 +174,12 @@
                       {{ repo.language }}
                     </span>
                     <span class="repo-date">
-                      Updated {{ formatDate(repo.updated_at) }}
+                      Updated {{ formatDate(repo.updatedAt) }}
                     </span>
                   </div>
                   
                   <div class="repo-footer">
-                    <button mat-stroked-button (click)="openLink(repo.html_url)">
+                    <button mat-stroked-button (click)="openGitHubRepo(repo)">
                       <mat-icon>code</mat-icon>
                       View on GitHub
                     </button>

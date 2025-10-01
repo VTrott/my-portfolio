@@ -10,7 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../../services/project.service';
-import { GitHubService } from '../../services/github.service';
+import { GitHubService, GitHubRepository, GitHubProfile } from '../../services/github.service';
+import { AnalyticsService } from '../../services/analytics.service';
 import { Project } from '../../models/project.model';
 
 @Component({
@@ -40,12 +41,16 @@ export class Projects implements OnInit {
   loading = true;
   error: string | null = null;
   selectedTab = 0;
-  githubRepos: any[] = [];
+  githubRepos: GitHubRepository[] = [];
+  githubProfile: GitHubProfile | null = null;
   showGitHubRepos = false;
+  githubLoading = false;
+  githubError: string | null = null;
 
   constructor(
     private projectService: ProjectService,
-    private githubService: GitHubService
+    private githubService: GitHubService,
+    private analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {
@@ -108,14 +113,46 @@ export class Projects implements OnInit {
     }
   }
 
+  openProjectLink(project: Project, linkType: 'github' | 'live') {
+    const url = linkType === 'github' ? project.githubUrl : project.liveUrl;
+    if (url) {
+      this.analyticsService.trackProjectView(project.title);
+      if (linkType === 'github') {
+        this.analyticsService.trackGitHubClick(project.title);
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  openGitHubRepo(repo: GitHubRepository) {
+    this.analyticsService.trackGitHubClick(repo.name);
+    window.open(repo.htmlUrl, '_blank', 'noopener,noreferrer');
+  }
+
   loadGitHubRepos() {
-    this.githubService.getUserRepositories('victoria-trotter').subscribe({
+    this.githubLoading = true;
+    this.githubError = null;
+    
+    // Load both profile and repositories
+    this.githubService.getUserProfile('VTrott').subscribe({
+      next: (profile) => {
+        this.githubProfile = profile;
+      },
+      error: (error) => {
+        console.error('Error loading GitHub profile:', error);
+      }
+    });
+
+    this.githubService.getUserRepositories('VTrott').subscribe({
       next: (repos) => {
         this.githubRepos = repos;
         this.showGitHubRepos = true;
+        this.githubLoading = false;
       },
       error: (error) => {
         console.error('Error loading GitHub repositories:', error);
+        this.githubError = 'Failed to load GitHub repositories';
+        this.githubLoading = false;
       }
     });
   }
@@ -138,5 +175,34 @@ export class Projects implements OnInit {
 
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString();
+  }
+
+  formatGitHubDate(dateString: string): string {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) return 'yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+    if (diffDays < 365) return `${Math.ceil(diffDays / 30)} months ago`;
+    return `${Math.ceil(diffDays / 365)} years ago`;
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+
+  getRepositoryTopics(topics: string[] | undefined): string[] {
+    return topics || [];
+  }
+
+  isRepositoryActive(repo: GitHubRepository): boolean {
+    return !repo.archived && !repo.disabled;
   }
 }

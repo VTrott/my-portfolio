@@ -37,15 +37,27 @@
       
       <div class="contact-links">
         <a mat-raised-button color="primary" [href]="about?.email ? 'mailto:' + about?.email : '#'" 
-           *ngIf="about?.email">
+           *ngIf="about?.email" (click)="openLink(about?.email, 'email')">
           <mat-icon>email</mat-icon>
           Contact Me
         </a>
         <a mat-stroked-button [href]="about?.resumeUrl" target="_blank" rel="noopener" 
-           *ngIf="about?.resumeUrl">
+           *ngIf="about?.resumeUrl" (click)="openLink(about?.resumeUrl, 'resume')">
           <mat-icon>download</mat-icon>
           Download Resume
         </a>
+        <button mat-stroked-button (click)="toggleContactInfo()" *ngIf="about?.phone">
+          <mat-icon>{{ showContactInfo ? 'visibility_off' : 'phone' }}</mat-icon>
+          {{ showContactInfo ? 'Hide Contact Info' : 'Show Phone' }}
+        </button>
+      </div>
+      
+      <div class="hidden-contact-info" *ngIf="showContactInfo && about?.phone">
+        <div class="contact-detail">
+          <mat-icon>phone</mat-icon>
+          <span>{{ about?.phone }}</span>
+        </div>
+        <p class="contact-note">Please use email for initial contact. Phone available upon request.</p>
       </div>
       
       <div class="social-links" *ngIf="about?.linkedinUrl || about?.githubUrl">

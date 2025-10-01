@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ContactService } from '../../services/contact.service';
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
   selector: 'app-contact',
@@ -33,7 +34,8 @@ export class Contact implements OnInit {
   constructor(
     private fb: FormBuilder,
     private contactService: ContactService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private analyticsService: AnalyticsService
   ) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -51,6 +53,7 @@ export class Contact implements OnInit {
       
       this.contactService.sendMessage(this.contactForm.value).subscribe({
         next: (response) => {
+          this.analyticsService.trackContactFormSubmit();
           this.snackBar.open('Message sent successfully!', 'Close', {
             duration: 5000,
             horizontalPosition: 'center',

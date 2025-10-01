@@ -400,3 +400,46 @@ $shadow-heavy: rgba(15, 23, 42, 0.12);
     }
   }
 }
+
+.hidden-contact-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(25, 118, 210, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(25, 118, 210, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #1976d2;
+
+    mat-icon {
+      font-size: 1.2rem;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+
+  .contact-note {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

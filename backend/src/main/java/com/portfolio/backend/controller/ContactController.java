@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/contact")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
 public class ContactController {
     
     @Autowired
@@ -45,8 +47,24 @@ public class ContactController {
     
     @PostMapping
     public ResponseEntity<ContactMessage> createMessage(@RequestBody ContactMessage message) {
-        ContactMessage savedMessage = contactService.saveMessage(message);
+        ContactMessage savedMessage = contactService.saveMessageAndSendEmail(message);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMessage);
+    }
+    
+    @PostMapping("/send")
+    public ResponseEntity<Map<String, String>> sendMessage(@RequestBody ContactMessage message) {
+        try {
+            ContactMessage savedMessage = contactService.saveMessageAndSendEmail(message);
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("message", "Message sent successfully!");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Failed to send message. Please try again.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
     
     @PutMapping("/{id}/mark-read")

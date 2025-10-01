@@ -31,8 +31,8 @@ export class ContactService {
     return this.http.post<ContactMessage>(this.apiUrl, message);
   }
 
-  sendMessage(message: any): Observable<any> {
-    return this.http.post(this.apiUrl, message);
+  sendMessage(message: ContactMessage): Observable<any> {
+    return this.http.post(`${this.apiUrl}/send`, message);
   }
 
   markAsRead(id: number): Observable<ContactMessage> {
